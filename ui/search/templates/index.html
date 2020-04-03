@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>State Energy Search</title>  
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'style/main.css' %}">
+    </head>
+    <body>
+    	<div align="center">
+	        <div id="header">
+	            <h1>U.S. Energy Search</h1>
+	        </div>
+
+			<form method="get">
+				{% csrf_token %}
+                <table class="form">
+                {{ form }}
+                </table>
+			    <input type="submit" value="Search">
+			</form>
+
+		{% if args %}
+        <div class="args">
+            <pre>{{ args }}</pre>
+        </div>
+        {% endif %}
+
+        {% if err %}
+        <div class="error">
+            {{ err|safe }}
+        </div>
+        {% endif %}
+
+        <div class="frame">
+            {% if result != None %}
+            <div class="results", style="overflow-x:auto;">
+                <table class="states_table">
+                    <tr>
+                        {% for col in columns %}
+                        <th>{{ col }}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for entry in result %}
+                    <tr>
+                        {% for col in entry %}
+                        <td>{{ col }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="image">
+            {% if image1 != None %}
+            <div class="results", style="overflow-x:auto;">
+                <table class="states_image">
+                	<tr>
+                    {% for i in image1 %}
+                     <td> <img src="{% static i %}" width="100%"> </td>
+                    {% endfor %}
+                	</tr>
+                </table>
+            </div>
+
+            {% endif %}
+            {% if image2 != None %}
+            <div class="results", style="overflow-x:auto;">
+                <table class="states_image">
+                    <tr>
+                    {% for i in image2 %}
+                     <td> <img src="{% static i %}" width="100%"> </td>
+                    {% endfor %}
+                    </tr>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+
+    </body>
+</html>
